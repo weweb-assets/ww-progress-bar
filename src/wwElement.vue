@@ -4,13 +4,13 @@
             <wwElement
                 v-if="content.embedLabel && content.labelCentering === 'progress'"
                 v-bind="content.progressionLabel"
-                :ww-props="{ text: content.value }"
+                :ww-props="{ text: `${content.value}%` }"
             />
         </div>
         <wwElement
             v-if="content.embedLabel && content.labelCentering === 'element'"
             v-bind="content.progressionLabel"
-            :ww-props="{ text: content.value }"
+            :ww-props="{ text: `${content.value}%` }"
         />
     </div>
 </template>
@@ -24,29 +24,27 @@ export default {
     },
     emits: ['update:content:effect', 'trigger-event'],
     setup(props) {
-        const formatedValue = wwLib.wwUtils.getLengthUnit(props.content.value)[0] || 0;
         const { value: variableValue, setValue } = wwLib.wwVariable.useComponentVariable(
             props.uid,
             'value',
-            formatedValue === undefined ? 0 : formatedValue
+            props.content.value === undefined ? 0 : props.content.value
         );
         return { variableValue, setValue };
     },
     computed: {
         value() {
-            return this.variableValue;
+            return parseInt(this.variableValue);
         },
         cssVariables() {
-            const unitValue = wwLib.wwUtils.getLengthUnit(this.content.value)[0] || 0;
             return {
-                '--progression': `${unitValue}%`,
+                '--progression': `${this.value}%`,
                 '--selector-color': this.content.progressBarColor,
             };
         },
     },
     watch: {
         'content.value'(newValue) {
-            newValue = wwLib.wwUtils.getLengthUnit(this.content.value)[0] || 0;
+            newValue = parseInt(this.content.value);
             if (newValue === this.value) return;
             this.setValue(newValue);
             this.$emit('trigger-event', { name: 'initValueChange', event: { value: newValue } });

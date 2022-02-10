@@ -12,14 +12,16 @@ export default {
     ],
     properties: {
         value: {
+            type: 'Number',
             label: {
                 en: 'Init value',
             },
-            type: 'Length',
             options: {
-                unitChoices: [{ value: '%', label: '%', min: 0, max: 100 }],
+                min: 0,
+                max: 100,
+                step: 1,
             },
-            defaultValue: '100%',
+            defaultValue: 100,
             bindable: true,
         },
         progressBarColor: {
