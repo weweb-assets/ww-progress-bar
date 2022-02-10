@@ -24,10 +24,11 @@ export default {
     },
     emits: ['update:content:effect', 'trigger-event'],
     setup(props) {
+        const formatedValue = wwLib.wwUtils.getLengthUnit(props.content.value)[0] || 0;
         const { value: variableValue, setValue } = wwLib.wwVariable.useComponentVariable(
             props.uid,
             'value',
-            props.content.value === undefined ? 0 : props.content.value
+            formatedValue === undefined ? 0 : formatedValue
         );
         return { variableValue, setValue };
     },
@@ -36,7 +37,7 @@ export default {
             return this.variableValue;
         },
         cssVariables() {
-            const unitValue = wwLib.wwUtils.getLengthUnit(this.content.value)[0];
+            const unitValue = wwLib.wwUtils.getLengthUnit(this.content.value)[0] || 0;
             return {
                 '--progression': `${unitValue}%`,
                 '--selector-color': this.content.progressBarColor,
