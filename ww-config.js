@@ -21,7 +21,7 @@ export default {
                 max: 100,
                 step: 1,
             },
-            defaultValue: 100,
+            defaultValue: undefined,
             bindable: true,
         },
         progressBarColor: {

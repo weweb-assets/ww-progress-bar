@@ -4,13 +4,13 @@
             <wwElement
                 v-if="content.embedLabel && content.labelCentering === 'progress'"
                 v-bind="content.progressionLabel"
-                :ww-props="{ text: `${content.value}%` }"
+                :ww-props="{ text: `${value}%` }"
             />
         </div>
         <wwElement
             v-if="content.embedLabel && content.labelCentering === 'element'"
             v-bind="content.progressionLabel"
-            :ww-props="{ text: `${content.value}%` }"
+            :ww-props="{ text: `${value}%` }"
         />
     </div>
 </template>
@@ -33,6 +33,7 @@ export default {
     },
     computed: {
         value() {
+            if (isNaN(this.variableValue)) return 0;
             return parseInt(this.variableValue);
         },
         cssVariables() {
@@ -44,7 +45,9 @@ export default {
     },
     watch: {
         'content.value'(newValue) {
-            newValue = parseInt(this.content.value);
+            if (newValue === undefined) return;
+            if (isNaN(newValue)) newValue = 0;
+            else newValue = parseInt(this.content.value);
             if (newValue === this.value) return;
             this.setValue(newValue);
             this.$emit('trigger-event', { name: 'initValueChange', event: { value: newValue } });
