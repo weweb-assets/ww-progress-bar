@@ -1,16 +1,14 @@
 <template>
-    <div type="button" class="ww-progress-bar" :class="{ '-active': value }" :style="cssVariables">
+    <div class="ww-progress-bar" :style="cssVariables">
         <div class="progression">
             <wwElement
                 v-if="content.embedLabel && content.labelCentering === 'progress'"
-                ref="progressLabel"
                 v-bind="content.progressionLabel"
                 :ww-props="{ text: content.value }"
             />
         </div>
         <wwElement
             v-if="content.embedLabel && content.labelCentering === 'element'"
-            ref="progressLabel"
             v-bind="content.progressionLabel"
             :ww-props="{ text: content.value }"
         />
