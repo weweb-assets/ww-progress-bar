@@ -1,0 +1,93 @@
+<template>
+    <div class="ww-progress-bar" :style="cssVariables">
+        <div class="progression">
+            <wwElement
+                v-if="content.embedLabel && content.labelCentering === 'progress'"
+                v-bind="content.progressionLabel"
+                :ww-props="{ text: `${value}%` }"
+            />
+        </div>
+        <wwElement
+            v-if="content.embedLabel && content.labelCentering === 'element'"
+            v-bind="content.progressionLabel"
+            :ww-props="{ text: `${value}%` }"
+        />
+    </div>
+</template>
+
+<script>
+export default {
+    props: {
+        content: { type: Object, required: true },
+        uid: { type: String, required: true },
+        wwElementState: { type: Object, required: true },
+    },
+    emits: ['update:content:effect', 'trigger-event'],
+    setup(props) {
+        let val = parseInt(props.content.value);
+        if (isNaN(val)) val = 0;
+
+        const { value: variableValue, setValue } = wwLib.wwVariable.useComponentVariable(
+            props.uid,
+            'value',
+            val === undefined ? 0 : val
+        );
+        return { variableValue, setValue };
+    },
+    computed: {
+        value() {
+            let val = parseInt(this.variableValue);
+            if (isNaN(val)) return 0;
+            return val;
+        },
+        cssVariables() {
+            return {
+                '--progression': `${this.value}%`,
+                '--selector-color': this.content.progressBarColor,
+            };
+        },
+    },
+    watch: {
+        'content.value'(newValue) {
+            if (newValue === undefined) return;
+            newValue = parseInt(this.content.value);
+            if (isNaN(newValue)) newValue = 0;
+            if (newValue === this.value) return;
+            this.setValue(newValue);
+            this.$emit('trigger-event', { name: 'initValueChange', event: { value: newValue } });
+        },
+    },
+};
+</script>
+
+<style lang="scss" scoped>
+.ww-progress-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: inherit;
+    box-sizing: content-box;
+    position: relative;
+    border: inherit;
+    border-radius: inherit;
+    transition: inherit;
+    height: inherit;
+    width: inherit;
+    overflow: hidden;
+
+    .progression {
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: var(--progression);
+        background: var(--selector-color);
+        border-radius: inherit;
+        transition: inherit;
+    }
+}
+</style>
