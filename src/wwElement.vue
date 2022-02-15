@@ -24,17 +24,21 @@ export default {
     },
     emits: ['update:content:effect', 'trigger-event'],
     setup(props) {
+        let val = parseInt(props.content.value);
+        if (isNaN(val)) val = 0;
+
         const { value: variableValue, setValue } = wwLib.wwVariable.useComponentVariable(
             props.uid,
             'value',
-            props.content.value === undefined ? 0 : props.content.value
+            val === undefined ? 0 : val
         );
         return { variableValue, setValue };
     },
     computed: {
         value() {
-            if (isNaN(this.variableValue)) return 0;
-            return parseInt(this.variableValue);
+            let val = parseInt(this.variableValue);
+            if (isNaN(val)) return 0;
+            return val;
         },
         cssVariables() {
             return {
@@ -46,8 +50,8 @@ export default {
     watch: {
         'content.value'(newValue) {
             if (newValue === undefined) return;
+            newValue = parseInt(this.content.value);
             if (isNaN(newValue)) newValue = 0;
-            else newValue = parseInt(this.content.value);
             if (newValue === this.value) return;
             this.setValue(newValue);
             this.$emit('trigger-event', { name: 'initValueChange', event: { value: newValue } });

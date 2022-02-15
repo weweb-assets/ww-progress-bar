@@ -4,7 +4,8 @@ export default {
             en: 'Progress bar',
             fr: 'Progress bar',
         },
-        icon: 'fontawesome/solid/toggle-on',
+        // Some Font Awesome icons missing : https://fontawesome.com/icons/bars-progress?s=regular
+        // icon: 'fontawesome/regular/bars-progress',
     },
     triggerEvents: [
         { name: 'change', label: { en: 'On change' }, event: { value: '' } },
