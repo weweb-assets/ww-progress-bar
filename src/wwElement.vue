@@ -66,6 +66,7 @@ export default {
     },
     methods: {
         async createLabelElement() {
+            if (this.content.progressionLabel !== null) return;
             const progressionLabel = await wwLib.createElement('ww-text');
             this.$emit('update:content', { progressionLabel });
         },
