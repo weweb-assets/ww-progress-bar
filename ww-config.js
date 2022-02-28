@@ -45,16 +45,17 @@ export default {
             section: 'settings',
             defaultValue: true,
         },
-        labelCentering: {
+        label: {
             label: {
-                en: 'Label centered on',
-                fr: 'Label centered on',
+                en: 'Label',
+                fr: 'Label',
             },
             type: 'TextSelect',
             options: {
                 options: [
                     { value: 'element', label: { en: 'Element' } },
                     { value: 'progress', label: { en: 'Progression' } },
+                    { value: 'none', label: { en: 'None' } },
                 ],
             },
             defaultValue: 'progress',
