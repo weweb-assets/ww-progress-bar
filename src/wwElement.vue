@@ -21,8 +21,11 @@ export default {
         content: { type: Object, required: true },
         uid: { type: String, required: true },
         wwElementState: { type: Object, required: true },
+        /* wwEditor:start */
+        wwEditorState: { type: Object, required: true },
+        /* wwEditor:end */
     },
-    emits: ['update:content:effect', 'trigger-event', 'update:content'],
+    emits: ['update:content:effect', 'trigger-event'],
     setup(props) {
         let val = parseInt(props.content.value);
         if (isNaN(val)) val = 0;
@@ -58,7 +61,7 @@ export default {
         },
         'content.label'(label) {
             if (label === 'none') {
-                this.$emit('update:content', { progressionLabel: null });
+                this.$emit('update:content:effect', { progressionLabel: null });
             } else {
                 this.createLabelElement();
             }
@@ -66,9 +69,10 @@ export default {
     },
     methods: {
         async createLabelElement() {
+            if (this.wwEditorState.isACopy) return;
             if (this.content.progressionLabel !== null) return;
             const progressionLabel = await wwLib.createElement('ww-text');
-            this.$emit('update:content', { progressionLabel });
+            this.$emit('update:content:effect', { progressionLabel });
         },
     },
 };
