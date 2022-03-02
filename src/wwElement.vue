@@ -2,13 +2,13 @@
     <div class="ww-progress-bar" :style="cssVariables">
         <div class="progression">
             <wwElement
-                v-if="content.embedLabel && content.labelCentering === 'progress'"
+                v-if="content.embedLabel && content.label === 'progress'"
                 v-bind="content.progressionLabel"
                 :ww-props="{ text: `${value}%` }"
             />
         </div>
         <wwElement
-            v-if="content.embedLabel && content.labelCentering === 'element'"
+            v-if="content.embedLabel && content.label === 'element'"
             v-bind="content.progressionLabel"
             :ww-props="{ text: `${value}%` }"
         />
@@ -21,6 +21,9 @@ export default {
         content: { type: Object, required: true },
         uid: { type: String, required: true },
         wwElementState: { type: Object, required: true },
+        /* wwEditor:start */
+        wwEditorState: { type: Object, required: true },
+        /* wwEditor:end */
     },
     emits: ['update:content:effect', 'trigger-event'],
     setup(props) {
@@ -55,6 +58,21 @@ export default {
             if (newValue === this.value) return;
             this.setValue(newValue);
             this.$emit('trigger-event', { name: 'initValueChange', event: { value: newValue } });
+        },
+        'content.label'(label) {
+            if (label === 'none') {
+                this.$emit('update:content:effect', { progressionLabel: null });
+            } else {
+                this.createLabelElement();
+            }
+        },
+    },
+    methods: {
+        async createLabelElement() {
+            if (this.wwEditorState.isACopy) return;
+            if (this.content.progressionLabel !== null) return;
+            const progressionLabel = await wwLib.createElement('ww-text');
+            this.$emit('update:content:effect', { progressionLabel });
         },
     },
 };
