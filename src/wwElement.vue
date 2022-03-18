@@ -4,13 +4,13 @@
             <wwElement
                 v-if="content.embedLabel && content.label === 'progress'"
                 v-bind="content.progressionLabel"
-                :ww-props="{ text: `${value}%` }"
+                :ww-props="{ text: `${variableValue}%` }"
             />
         </div>
         <wwElement
             v-if="content.embedLabel && content.label === 'element'"
             v-bind="content.progressionLabel"
-            :ww-props="{ text: `${value}%` }"
+            :ww-props="{ text: `${variableValue}%` }"
         />
     </div>
 </template>
@@ -27,37 +27,31 @@ export default {
     },
     emits: ['update:content:effect', 'trigger-event'],
     setup(props) {
-        let val = parseInt(props.content.value);
-        if (isNaN(val)) val = 0;
-
-        const { value: variableValue, setValue } = wwLib.wwVariable.useComponentVariable(
-            props.uid,
-            'value',
-            val === undefined ? 0 : val
-        );
+        const { value: variableValue, setValue } = wwLib.wwVariable.useComponentVariable({
+            uid: props.uid,
+            name: 'value',
+            defaultValue: props.content.value,
+            sanitizer: value => {
+                const parsedValue = parseInt(value || 0)
+                return isNaN(val) ? 0 : val
+            }
+        });
         return { variableValue, setValue };
     },
     computed: {
-        value() {
-            let val = parseInt(this.variableValue);
-            if (isNaN(val)) return 0;
-            return val;
-        },
         cssVariables() {
             return {
-                '--progression': `${this.value}%`,
+                '--progression': `${this.variableValue}%`,
                 '--selector-color': this.content.progressBarColor,
             };
         },
     },
     watch: {
-        'content.value'(newValue) {
-            if (newValue === undefined) return;
-            newValue = parseInt(this.content.value);
-            if (isNaN(newValue)) newValue = 0;
-            if (newValue === this.value) return;
-            this.setValue(newValue);
-            this.$emit('trigger-event', { name: 'initValueChange', event: { value: newValue } });
+        'content.value'(value) {
+            const { newValue, hasChanged } = this.setValue(value);
+            if (hasChanged) {
+                this.$emit('trigger-event', { name: 'initValueChange', event: { value: newValue } });
+            }
         },
         'content.label'(label) {
             if (label === 'none') {
