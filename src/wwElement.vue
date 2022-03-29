@@ -21,6 +21,7 @@ export default {
         content: { type: Object, required: true },
         uid: { type: String, required: true },
         wwElementState: { type: Object, required: true },
+         wwFrontState: { type: Object, required: true },
         /* wwEditor:start */
         wwEditorState: { type: Object, required: true },
         /* wwEditor:end */
@@ -72,7 +73,7 @@ export default {
         async createLabelElement() {
             if (this.wwEditorState.isACopy) return;
             if (this.content.progressionLabel !== null) return;
-            const progressionLabel = await wwLib.createElement('ww-text');
+            const progressionLabel = await wwLib.createElement('ww-text', this.wwFrontState.sectionId);
             this.$emit('update:content:effect', { progressionLabel });
         },
     },
