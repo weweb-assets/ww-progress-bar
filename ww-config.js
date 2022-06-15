@@ -7,22 +7,20 @@ export default {
         // Some Font Awesome icons missing : https://fontawesome.com/icons/bars-progress?s=regular
         // icon: 'fontawesome/regular/bars-progress',
     },
-    triggerEvents: [
-        { name: 'change', label: { en: 'On change' }, event: { value: '' } },
-        { name: 'initValueChange', label: { en: 'On init value change' }, event: { value: '' } },
-    ],
+    triggerEvents: [{ name: 'change', label: { en: 'On change' }, event: { value: '' } }],
     properties: {
         value: {
             type: 'Number',
             label: {
-                en: 'Init value',
+                en: 'Value',
             },
             options: {
                 min: 0,
                 max: 100,
                 step: 1,
             },
-            defaultValue: undefined,
+            section: 'settings',
+            defaultValue: 65,
             bindable: true,
         },
         progressBarColor: {
@@ -35,15 +33,6 @@ export default {
                 nullable: true,
                 gradient: true,
             },
-        },
-        embedLabel: {
-            type: 'OnOff',
-            label: {
-                en: 'Embed label',
-                fr: 'Label intégré',
-            },
-            section: 'settings',
-            defaultValue: true,
         },
         label: {
             label: {

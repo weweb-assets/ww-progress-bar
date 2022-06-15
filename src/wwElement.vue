@@ -2,13 +2,13 @@
     <div class="ww-progress-bar" :style="cssVariables">
         <div class="progression">
             <wwElement
-                v-if="content.embedLabel && content.label === 'progress'"
+                v-if="content.label === 'progress'"
                 v-bind="content.progressionLabel"
                 :ww-props="{ text: `${value}%` }"
             />
         </div>
         <wwElement
-            v-if="content.embedLabel && content.label === 'element'"
+            v-if="content.label === 'element'"
             v-bind="content.progressionLabel"
             :ww-props="{ text: `${value}%` }"
         />
@@ -21,7 +21,7 @@ export default {
         content: { type: Object, required: true },
         uid: { type: String, required: true },
         wwElementState: { type: Object, required: true },
-         wwFrontState: { type: Object, required: true },
+        wwFrontState: { type: Object, required: true },
         /* wwEditor:start */
         wwEditorState: { type: Object, required: true },
         /* wwEditor:end */
@@ -35,7 +35,7 @@ export default {
             uid: props.uid,
             name: 'value',
             type: 'number',
-            defaultValue: val === undefined ? 0 : val
+            defaultValue: val === undefined ? 0 : val,
         });
         return { variableValue, setValue };
     },
@@ -59,7 +59,7 @@ export default {
             if (isNaN(newValue)) newValue = 0;
             if (newValue === this.value) return;
             this.setValue(newValue);
-            this.$emit('trigger-event', { name: 'initValueChange', event: { value: newValue } });
+            this.$emit('trigger-event', { name: 'change', event: { value: newValue } });
         },
         'content.label'(label) {
             if (label === 'none') {
@@ -73,7 +73,7 @@ export default {
         async createLabelElement() {
             if (this.wwEditorState.isACopy) return;
             if (this.content.progressionLabel !== null) return;
-            const progressionLabel = await wwLib.createElement('ww-text', {},{}, this.wwFrontState.sectionId);
+            const progressionLabel = await wwLib.createElement('ww-text', {}, {}, this.wwFrontState.sectionId);
             this.$emit('update:content:effect', { progressionLabel });
         },
     },
