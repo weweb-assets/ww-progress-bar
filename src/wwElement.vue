@@ -85,14 +85,11 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: inherit;
     box-sizing: content-box;
     position: relative;
-    border: inherit;
-    border-radius: inherit;
     transition: inherit;
-    height: inherit;
-    width: inherit;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
 
     .progression {
