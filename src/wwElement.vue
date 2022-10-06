@@ -48,7 +48,7 @@ export default {
         cssVariables() {
             return {
                 '--progression': `${this.value}%`,
-                '--selector-color': this.content.progressBarColor,
+                '--selector-color': `${this.content.progressBarColor}`,
             };
         },
     },
