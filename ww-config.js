@@ -33,6 +33,8 @@ export default {
                 nullable: true,
                 gradient: true,
             },
+            defaultValue: '#099AF2',
+            bindable: true,
         },
         label: {
             label: {
