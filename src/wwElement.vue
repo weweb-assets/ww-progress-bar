@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { computed } from "vue";
+
 export default {
     props: {
         content: { type: Object, required: true },
@@ -35,7 +37,7 @@ export default {
             uid: props.uid,
             name: 'value',
             type: 'number',
-            defaultValue: val === undefined ? 0 : val,
+            defaultValue: computed(() => val === undefined ? 0 : val),
         });
         return { variableValue, setValue };
     },
