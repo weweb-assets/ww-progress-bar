@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { computed } from "vue";
+
 export default {
     props: {
         content: { type: Object, required: true },
@@ -28,14 +30,15 @@ export default {
     },
     emits: ['update:content:effect', 'trigger-event'],
     setup(props) {
-        let val = parseInt(props.content.value);
-        if (isNaN(val)) val = 0;
-
         const { value: variableValue, setValue } = wwLib.wwVariable.useComponentVariable({
             uid: props.uid,
             name: 'value',
             type: 'number',
-            defaultValue: val === undefined ? 0 : val,
+            defaultValue: computed(() => {
+                let val = parseInt(props.content.value);
+                if (isNaN(val)) val = 0;
+                return val === undefined ? 0 : val
+            }),
         });
         return { variableValue, setValue };
     },
