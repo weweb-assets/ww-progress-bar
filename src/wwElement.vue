@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed } from 'vue';
 
 export default {
     props: {
@@ -37,7 +37,7 @@ export default {
             defaultValue: computed(() => {
                 let val = parseInt(props.content.value);
                 if (isNaN(val)) val = 0;
-                return val === undefined ? 0 : val
+                return val === undefined ? 0 : val;
             }),
         });
         return { variableValue, setValue };
@@ -94,7 +94,7 @@ export default {
     height: 100%;
     width: 100%;
     overflow: hidden;
-
+    border-radius: inherit;
     .progression {
         overflow: hidden;
         display: flex;
