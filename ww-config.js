@@ -35,6 +35,9 @@ export default {
             },
             defaultValue: '#099AF2',
             bindable: true,
+            states: true,
+            responsive: true,
+            classes: true,
         },
         label: {
             label: {
@@ -50,6 +53,9 @@ export default {
                 ],
             },
             defaultValue: 'progress',
+            states: true,
+            responsive: true,
+            classes: true,
         },
         progressionLabel: {
             hidden: true,
