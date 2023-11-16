@@ -40,7 +40,10 @@ export default {
                 return val === undefined ? 0 : val;
             }),
         });
-        return { variableValue, setValue };
+
+        const { createElement } = wwLib.useCreateElement();
+
+        return { variableValue, setValue, createElement };
     },
     computed: {
         value() {
@@ -76,7 +79,7 @@ export default {
         async createLabelElement() {
             if (this.wwEditorState.isACopy) return;
             if (this.content.progressionLabel !== null) return;
-            const progressionLabel = await wwLib.createElement('ww-text', {}, {}, this.wwFrontState.sectionId);
+            const progressionLabel = await this.createElement('ww-text');
             this.$emit('update:content:effect', { progressionLabel });
         },
     },
