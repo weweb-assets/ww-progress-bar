@@ -40,7 +40,18 @@ export default {
                 return val === undefined ? 0 : val;
             }),
         });
-        return { variableValue, setValue };
+
+        /* wwEditor:start */
+        const { createElement } = wwLib.useCreateElement();
+        /* wwEditor:end */
+
+        return { 
+            variableValue, 
+            setValue, 
+            /* wwEditor:start */
+            createElement 
+            /* wwEditor:end */
+        };
     },
     computed: {
         value() {
@@ -64,6 +75,7 @@ export default {
             this.setValue(newValue);
             this.$emit('trigger-event', { name: 'change', event: { value: newValue } });
         },
+        /* wwEditor:start */
         'content.label'(label) {
             if (label === 'none') {
                 this.$emit('update:content:effect', { progressionLabel: null });
@@ -71,15 +83,18 @@ export default {
                 this.createLabelElement();
             }
         },
+        /* wwEditor:end */
     },
+    /* wwEditor:start */
     methods: {
         async createLabelElement() {
             if (this.wwEditorState.isACopy) return;
             if (this.content.progressionLabel !== null) return;
-            const progressionLabel = await wwLib.createElement('ww-text', {}, {}, this.wwFrontState.sectionId);
+            const progressionLabel = await this.createElement('ww-text');
             this.$emit('update:content:effect', { progressionLabel });
         },
     },
+    /* wwEditor:end */
 };
 </script>
 
