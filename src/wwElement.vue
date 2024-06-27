@@ -42,14 +42,14 @@ export default {
         });
 
         /* wwEditor:start */
-        const { createElement } = wwLib.useCreateElement();
+        const { createElement } = wwLib.wwElement.useCreate();
         /* wwEditor:end */
 
-        return { 
-            variableValue, 
-            setValue, 
+        return {
+            variableValue,
+            setValue,
             /* wwEditor:start */
-            createElement 
+            createElement,
             /* wwEditor:end */
         };
     },
