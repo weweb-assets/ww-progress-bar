@@ -7,6 +7,9 @@ export default {
         // Some Font Awesome icons missing : https://fontawesome.com/icons/bars-progress?s=regular
         // icon: 'fontawesome/regular/bars-progress',
     },
+    options: {
+        displayAllowedValues: ['flex', 'inline-flex'],
+    },
     triggerEvents: [{ name: 'change', label: { en: 'On change' }, event: { value: '' } }],
     properties: {
         value: {

@@ -45,11 +45,11 @@ export default {
         const { createElement } = wwLib.useCreateElement();
         /* wwEditor:end */
 
-        return { 
-            variableValue, 
-            setValue, 
+        return {
+            variableValue,
+            setValue,
             /* wwEditor:start */
-            createElement 
+            createElement,
             /* wwEditor:end */
         };
     },
@@ -100,16 +100,12 @@ export default {
 
 <style lang="scss" scoped>
 .ww-progress-bar {
-    display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: content-box;
     position: relative;
     transition: inherit;
-    height: 100%;
-    width: 100%;
     overflow: hidden;
-    border-radius: inherit;
     .progression {
         overflow: hidden;
         display: flex;
