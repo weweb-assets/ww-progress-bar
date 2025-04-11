@@ -90,7 +90,9 @@ export default {
         async createLabelElement() {
             if (this.wwEditorState.isACopy) return;
             if (this.content.progressionLabel !== null) return;
-            const progressionLabel = await this.createElement('ww-text');
+            const progressionLabel = await this.createElement('ww-text', {
+                _state: { style: { default: { zIndex: 1 } } },
+            });
             this.$emit('update:content:effect', { progressionLabel });
         },
     },
