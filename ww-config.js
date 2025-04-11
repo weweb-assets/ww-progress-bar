@@ -62,7 +62,7 @@ export default {
         },
         progressionLabel: {
             hidden: true,
-            defaultValue: { isWwObject: true, type: 'ww-text' },
+            defaultValue: { isWwObject: true, type: 'ww-text', _state: { style: { default: { zIndex: 1 } } },
         },
     },
 };
