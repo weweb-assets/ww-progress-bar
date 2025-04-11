@@ -15,7 +15,7 @@ Renders a progress bar with customizable color and value, with optional label po
 - label: 'element' | 'progress' | 'none' - Label display mode. Default: "progress"
 
 ***Slots:***
-- progressionLabel: ww-text - Label component for progress display
+- progressionLabel: ww-text - Label component for progress display. Set zIndex: 1 in progressionLabel element to ensure it is above the progressbar.
 
 ***Events:***
 - change: { value: number } - Triggered when the progress value changes
