@@ -1,10 +1,5 @@
 <template>
     <div class="ww-progress-bar" :style="cssVariables">
-        <wwElement
-            v-if="content.label === 'element'"
-            v-bind="content.progressionLabel"
-            :ww-props="{ text: `${value}%` }"
-        />
         <div class="progression">
             <wwElement
                 v-if="content.label === 'progress'"
@@ -12,6 +7,12 @@
                 :ww-props="{ text: `${value}%` }"
             />
         </div>
+        <wwElement
+            class="element"
+            v-if="content.label === 'element'"
+            v-bind="content.progressionLabel"
+            :ww-props="{ text: `${value}%` }"
+        />
     </div>
 </template>
 
@@ -119,6 +120,9 @@ export default {
         background: var(--selector-color);
         border-radius: inherit;
         transition: inherit;
+    }
+    .element {
+        z-index: 1;
     }
 }
 </style>
