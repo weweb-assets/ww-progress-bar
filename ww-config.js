@@ -32,10 +32,6 @@ export default {
                 en: 'Progress bar color',
                 fr: 'Couleur de la progress bar',
             },
-            options: {
-                nullable: true,
-                gradient: true,
-            },
             defaultValue: '#099AF2',
             bindable: true,
             states: true,
